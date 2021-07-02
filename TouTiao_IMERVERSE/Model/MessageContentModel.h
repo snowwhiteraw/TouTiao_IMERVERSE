@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MessageContentModel : NSObject
 
 @property NSString * messageid; //文章id，用于传给评论页
-@property NSString * label; 
+@property NSString * label;
 @property NSString * contentstring;
 @property NSString * author;
 @property NSString * agree;
@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSString * time;
 @property NSString * isFollowed;
 @property NSArray<NSString * > * labels;
+@property NSArray<NSString * > * unSelectedLabels;
 
 @end
 

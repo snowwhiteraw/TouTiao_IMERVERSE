@@ -75,6 +75,10 @@
 		9D5950B5268B7A9100C01759 /* LBXScanWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5950AA268B7A9000C01759 /* LBXScanWrapper.swift */; };
 		9D5950BD268B8B1900C01759 /* abcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5950BA268B8B1900C01759 /* abcViewController.m */; };
 		9D5950BE268B8B1900C01759 /* biaoqianViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5950BC268B8B1900C01759 /* biaoqianViewController.m */; };
+		9D595101268CAD1300C01759 /* MasonryDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D595100268CAD1300C01759 /* MasonryDemoViewController.m */; };
+		9D595104268DBEE700C01759 /* TagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D595103268DBEE700C01759 /* TagViewController.m */; };
+		9D59510A268DFF7800C01759 /* TagCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D595109268DFF7800C01759 /* TagCollectionViewCell.m */; };
+		9D59510D268E167200C01759 /* TagHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D59510C268E167200C01759 /* TagHeaderView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -190,6 +194,14 @@
 		9D5950BA268B8B1900C01759 /* abcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = abcViewController.m; sourceTree = "<group>"; };
 		9D5950BB268B8B1900C01759 /* abcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = abcViewController.h; sourceTree = "<group>"; };
 		9D5950BC268B8B1900C01759 /* biaoqianViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = biaoqianViewController.m; sourceTree = "<group>"; };
+		9D5950FF268CAD1300C01759 /* MasonryDemoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasonryDemoViewController.h; sourceTree = "<group>"; };
+		9D595100268CAD1300C01759 /* MasonryDemoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasonryDemoViewController.m; sourceTree = "<group>"; };
+		9D595102268DBEE700C01759 /* TagViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TagViewController.h; sourceTree = "<group>"; };
+		9D595103268DBEE700C01759 /* TagViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TagViewController.m; sourceTree = "<group>"; };
+		9D595108268DFF7800C01759 /* TagCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TagCollectionViewCell.h; sourceTree = "<group>"; };
+		9D595109268DFF7800C01759 /* TagCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TagCollectionViewCell.m; sourceTree = "<group>"; };
+		9D59510B268E166D00C01759 /* TagHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagHeaderView.h; sourceTree = "<group>"; };
+		9D59510C268E167200C01759 /* TagHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagHeaderView.m; sourceTree = "<group>"; };
 		FFB85D4A54C56DE2CA307B80 /* Pods-TouTiao_IMERVERSE.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TouTiao_IMERVERSE.release.xcconfig"; path = "Target Support Files/Pods-TouTiao_IMERVERSE/Pods-TouTiao_IMERVERSE.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -391,6 +403,10 @@
 				9D10F3382686C89D006B0FE7 /* RegisterViewController.m */,
 				9D10F33A2686C8D0006B0FE7 /* LoginViewController.h */,
 				9D10F33B2686C8D0006B0FE7 /* LoginViewController.m */,
+				9D5950FF268CAD1300C01759 /* MasonryDemoViewController.h */,
+				9D595100268CAD1300C01759 /* MasonryDemoViewController.m */,
+				9D595102268DBEE700C01759 /* TagViewController.h */,
+				9D595103268DBEE700C01759 /* TagViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -398,11 +414,15 @@
 		9D3E38C326803584001BEE67 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9D59510B268E166D00C01759 /* TagHeaderView.h */,
+				9D59510C268E167200C01759 /* TagHeaderView.m */,
 				9D3E38F02682E179001BEE67 /* plCell.h */,
 				9D3E38EF2682E178001BEE67 /* plCell.m */,
 				9D3E38F12682E179001BEE67 /* plCell.xib */,
 				9D3E38F22682E17A001BEE67 /* plstb.storyboard */,
 				9D3E38C926808B0A001BEE67 /* Menu.storyboard */,
+				9D595108268DFF7800C01759 /* TagCollectionViewCell.h */,
+				9D595109268DFF7800C01759 /* TagCollectionViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -659,11 +679,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D59510D268E167200C01759 /* TagHeaderView.m in Sources */,
 				9D595098268B1E3F00C01759 /* FabuViewController.swift in Sources */,
 				9D3E38F82682E18D001BEE67 /* plViewController.m in Sources */,
 				9D595084268B1DA000C01759 /* ImageResize.swift in Sources */,
 				9D3E38C2267F9DB2001BEE67 /* CollectionViewController.m in Sources */,
 				9D5950AC268B7A9100C01759 /* LBXScanView.swift in Sources */,
+				9D595101268CAD1300C01759 /* MasonryDemoViewController.m in Sources */,
 				9D10F3202685FB54006B0FE7 /* NSBundle+TVUMJRefresh.m in Sources */,
 				9D10F3272685FB54006B0FE7 /* TVUMJRefreshAutoGifFooter.m in Sources */,
 				9D3E38EC2681D7E8001BEE67 /* SlideMenuView.m in Sources */,
@@ -685,6 +707,7 @@
 				9D10F32C2685FB54006B0FE7 /* TVUMJRefreshFooter.m in Sources */,
 				9D10F3232685FB54006B0FE7 /* TVUMJRefreshBackNormalFooter.m in Sources */,
 				9D10F3262685FB54006B0FE7 /* TVUMJRefreshAutoNormalFooter.m in Sources */,
+				9D59510A268DFF7800C01759 /* TagCollectionViewCell.m in Sources */,
 				9D10F3242685FB54006B0FE7 /* TVUMJRefreshBackGifFooter.m in Sources */,
 				9D3E3846267A23CB001BEE67 /* AppDelegate.m in Sources */,
 				9D10F31D2685FB54006B0FE7 /* UIView+TVUMJExtension.m in Sources */,
@@ -699,6 +722,7 @@
 				9D59509C268B6E7900C01759 /* MenuViewController.swift in Sources */,
 				9D3E388A267EE9B1001BEE67 /* TabsbarViewController.m in Sources */,
 				9D10F3212685FB54006B0FE7 /* UIScrollView+TVUMJRefresh.m in Sources */,
+				9D595104268DBEE700C01759 /* TagViewController.m in Sources */,
 				9D10F32E2685FB54006B0FE7 /* TVUMJRefreshHeader.m in Sources */,
 				9D595053268A34C400C01759 /* Comment_ViewController.m in Sources */,
 				9D5950B2268B7A9100C01759 /* LBXScanViewStyle.swift in Sources */,

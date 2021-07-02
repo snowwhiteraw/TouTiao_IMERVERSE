@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSMutableArray<MessageContentModel *> * Contentarray;
 @property (strong, nonatomic) NSMutableString * api;
 
+@property NSInteger selectedItemsIndex;//当前页面要展示的是SelectedItems第几个标签
 
 + (UIImage *) getImageFromURL:(NSString *)fileURL;
 

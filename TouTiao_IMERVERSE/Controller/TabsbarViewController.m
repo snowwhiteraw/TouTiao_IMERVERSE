@@ -14,13 +14,14 @@
 #import <YYModel.h>
 #import "SceneDelegate.h"
 #import <SAMKeychain/SAMKeychain.h>
+#import "TagViewController.h"
 
 
-@interface TabsbarViewController ()<FSPageContentViewDelegate,FSSegmentTitleViewDelegate,HomeDelegate>
+@interface TabsbarViewController ()<FSPageContentViewDelegate,FSSegmentTitleViewDelegate,HomeDelegate,TagDelegate>
 @property (nonatomic, strong) FSPageContentView *pageContentView;
 @property (nonatomic, strong) FSSegmentTitleView *titleView;
-@property (nonatomic,strong) NSMutableArray * dataArr; //标签页数组
-
+@property (nonatomic,strong) NSMutableArray * dataArr; //选择展示的标签页数组
+@property (nonatomic,strong) NSMutableArray * unSelectedDataArr; //未选择的标签页数组
 
 @end
 
@@ -51,15 +52,18 @@
         //这里如果self.comnarr为nil要怎么提示用户没有数据？（未联网）
         
 #pragma mark 加载首页固定顶部标签页
+        self.selectedItemsIndex = 2;
+        
         self.dataArr = [self.Contentarray[0].labels mutableCopy];
+        self.unSelectedDataArr = [self.Contentarray[0].unSelectedLabels mutableCopy];
         
         self.automaticallyAdjustsScrollViewInsets = NO;
         self.view.backgroundColor = [UIColor whiteColor];
-        self.title = @"pageContentView";
+        self.title = @"pageContentView"; //当前navigationccontroller的标题，在下面代码中被标签组件覆盖了
         self.titleView = [[FSSegmentTitleView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/8,90, CGRectGetWidth(self.view.bounds) - self.view.frame.size.width/8 * 2, 50) titles:self.dataArr delegate:self indicatorType:FSIndicatorTypeEqualTitle];
         self.titleView.titleSelectFont = [UIFont systemFontOfSize:20];
         self.titleView.titleSelectColor = [UIColor redColor];
-        self.titleView.selectIndex = 2;
+        self.titleView.selectIndex = self.selectedItemsIndex; //这个决定展示的是第几个标签
         [self.view addSubview:_titleView];
         
         NSMutableArray *childVCs = [[NSMutableArray alloc]init];
@@ -70,7 +74,7 @@
             [childVCs addObject:vc];
         }
         self.pageContentView = [[FSPageContentView alloc]initWithFrame:CGRectMake(0, 90, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 90) childVCs:childVCs parentVC:self delegate:self];
-        self.pageContentView.contentViewCurrentIndex = 2;
+        self.pageContentView.contentViewCurrentIndex = self.selectedItemsIndex;
         self.pageContentView.contentViewCanScroll = YES;//设置滑动属性
         
         [self.view addSubview:_pageContentView];
@@ -88,8 +92,10 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"person"] style:UIBarButtonItemStylePlain target:self action:@selector(leftNavBtnAction)];
     self.navigationItem.leftBarButtonItem.tintColor = UIColor.redColor;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"magnifyingglass"] style:UIBarButtonItemStylePlain target:self action:@selector(rightNavBtnAction)];
+    //右上角，本来是搜索按钮，现在改为标签编辑页弹出按钮
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"line.horizontal.3"] style:UIBarButtonItemStylePlain target:self action:@selector(rightNavBtnAction)];
     self.navigationItem.rightBarButtonItem.tintColor = UIColor.redColor;
+    
 }
 
 - (void)FSSegmentTitleView:(FSSegmentTitleView *)titleView startIndex:(NSInteger)startIndex endIndex:(NSInteger)endIndex
@@ -113,14 +119,20 @@
 }
 - (void)rightNavBtnAction
 {
-    //点击搜索按钮
-    NSLog(@"跳转到搜索新页面咯");
+    //点击标签编辑页
+    NSLog(@"跳转到标签编辑页面咯");
     
-    //暂时先执行销户方法
-    [SAMKeychain deletePasswordForService:@"NowUser" account:@"toutiaoim"];
-    //销户完后要刷新tabs页面的头像和收藏、点赞状态
-    [self.navigationItem.leftBarButtonItem setImage:[UIImage systemImageNamed:@"person"]];
-    //没法取消收藏和点赞按钮状态2333
+    
+    TagViewController * tags = [[TagViewController alloc]init];
+    [tags initwithTags:self.dataArr :self.unSelectedDataArr];
+    tags.delegate = self;
+    [self.navigationController presentViewController:tags animated:YES completion:nil];
+    
+//    //暂时先执行销户方法
+//    [SAMKeychain deletePasswordForService:@"NowUser" account:@"toutiaoim"];
+//    //销户完后要刷新tabs页面的头像和收藏、点赞状态
+//    [self.navigationItem.leftBarButtonItem setImage:[UIImage systemImageNamed:@"person"]];
+//    //没法取消收藏和点赞按钮状态2333
 }
 
 
@@ -188,6 +200,40 @@
     NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
     result = [UIImage imageWithData:data];
     return result;
+}
+
+//继承TagDelegate的方法。刷新标签数据
+- (void) sentSelectedItems:(NSMutableArray*)selectedItems :(NSMutableArray*)unSelectItems{
+    NSLog(@"用户从标签页刷新了选择标签，这里刷新整个TabsView");
+    self.dataArr = [selectedItems mutableCopy];
+    self.unSelectedDataArr = [unSelectItems mutableCopy];
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.title = @"pageContentView"; //当前navigationccontroller的标题，在下面代码中被标签组件覆盖了
+    self.titleView = [[FSSegmentTitleView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/8,90, CGRectGetWidth(self.view.bounds) - self.view.frame.size.width/8 * 2, 50) titles:self.dataArr delegate:self indicatorType:FSIndicatorTypeEqualTitle];
+    self.titleView.titleSelectFont = [UIFont systemFontOfSize:20];
+    self.titleView.titleSelectColor = [UIColor redColor];
+    self.titleView.selectIndex = self.selectedItemsIndex;
+    [self.view addSubview:_titleView];
+    
+    NSMutableArray *childVCs = [[NSMutableArray alloc]init];
+    for (NSString *title in self.dataArr) {
+        HomeViewController *vc = [[HomeViewController alloc]init:self.Contentarray :title]; //加载对应标签的文章
+        vc.title = title;
+        vc.delegate = self; //利用代理方法实现监听，一旦收藏按钮进入登陆页面登陆成功，就会触发代理方法刷新头像
+        [childVCs addObject:vc];
+    }
+    self.pageContentView = [[FSPageContentView alloc]initWithFrame:CGRectMake(0, 90, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - 90) childVCs:childVCs parentVC:self delegate:self];
+    self.pageContentView.contentViewCurrentIndex = self.selectedItemsIndex;
+    self.pageContentView.contentViewCanScroll = YES;//设置滑动属性
+    
+    [self.view addSubview:_pageContentView];
+    [self.navigationItem setTitleView: self.titleView];
+}
+
+- (void) sentSelectedLabelIndex:(NSInteger) index{
+    self.selectedItemsIndex = index;
 }
 
 @end

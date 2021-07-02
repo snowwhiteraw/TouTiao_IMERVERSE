@@ -13,6 +13,8 @@
 #import "TouTiao_IMERVERSE-Bridging-Header.h"
 #import "TouTiao_IMERVERSE-Swift.h" //让OC类调用此项目中的swift类
 #import <FWSideMenu/FWSideMenu-Swift.h>
+#import "MasonryDemoViewController.h"
+#import "TagViewController.h"
 
 @interface SceneDelegate ()
 
@@ -23,20 +25,22 @@
 
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions {
     
+    
+//    self.window.backgroundColor = UIColor.whiteColor;
+//    self.window.rootViewController = [[MasonryDemoViewController alloc]init];
+    
 
     TabsbarViewController * vc = [[TabsbarViewController alloc]init]; //标签页
     MenuViewController * leftviewcontroller = [[MenuViewController alloc]init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: vc];
     UINavigationController *navleft = [[UINavigationController alloc] initWithRootViewController: leftviewcontroller];
-//    IQKeyboardManager.shared.enable = true;
-//    IQKeyboardManager.shared.enableAutoToolbar = false;
     //FWSideMenuContainerViewController仅仅用于建立一个容器，可以左滑右滑出现新页面，预先定义好
     self.sideMenuContainer = [FWSideMenuContainerViewController containerWithCenterViewController:nav centerLeftPanViewWidth:20 centerRightPanViewWidth:0 leftMenuViewController:navleft rightMenuViewController:nil]; //注意这里TabsbarViewController的vc是被放入nav的
     self.sideMenuContainer.leftMenuWidth = UIScreen.mainScreen.bounds.size.width * 1; //侧滑后的页面宽度
 
     self.window.rootViewController = self.sideMenuContainer;
-    
-//
+
+
 //    RegisterViewController * vc = [[RegisterViewController alloc]init];
 //    self.window.rootViewController = vc;
 
