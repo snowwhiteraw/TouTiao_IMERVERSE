@@ -79,6 +79,10 @@
         
         [self.view addSubview:_pageContentView];
         [self.navigationItem setTitleView: self.titleView];
+        
+        //右上角，本来是搜索按钮，现在改为标签编辑页弹出按钮
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"line.horizontal.3"] style:UIBarButtonItemStylePlain target:self action:@selector(rightNavBtnAction)];
+        self.navigationItem.rightBarButtonItem.tintColor = UIColor.redColor;
     //    self.navigationItem.title = @"今日头条沉浸版"; //当前navigationccontroller的标题
         //回调是异步的，所以需要注意没有回调前的其他函数里组件加载显示
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -92,9 +96,7 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"person"] style:UIBarButtonItemStylePlain target:self action:@selector(leftNavBtnAction)];
     self.navigationItem.leftBarButtonItem.tintColor = UIColor.redColor;
     
-    //右上角，本来是搜索按钮，现在改为标签编辑页弹出按钮
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"line.horizontal.3"] style:UIBarButtonItemStylePlain target:self action:@selector(rightNavBtnAction)];
-    self.navigationItem.rightBarButtonItem.tintColor = UIColor.redColor;
+   
     
 }
 

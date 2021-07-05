@@ -9,6 +9,7 @@
 #import <WebKit/WebKit.h>
 #import "MessageContentModel.h"
 #import "UserMessageModel.h"
+#import "ZanLikeView.h"
 
 @protocol HomeDelegate <NSObject>
 
@@ -27,7 +28,8 @@
 // 代理属性
 @property (weak,nonatomic) id<HomeDelegate> delegate;
 
-@property (strong, nonatomic)  UIButton *agreeButton;
+@property (strong, nonatomic)  UIButton *agreeButton; //旧版本的点赞按钮，现在改为likeview，因为要加动画
+@property (nonatomic, strong) ZanLikeView *likeView;
 @property (strong, nonatomic)  UIButton *commentButton;
 @property (strong, nonatomic)  UIButton *colletionButton;
 @property (strong, nonatomic)  UIButton *shareButton;
@@ -42,7 +44,7 @@
 //一次联网加载到APP的几十条h5文章相关标签
 @property (strong, nonatomic) NSMutableArray<MessageContentModel *> * Contentarray;
 
-@property int returnNum;  //此属性是一次返回的文章数，也是json里面的数组数
+//@property int returnNum;  //此属性是一次返回的文章数，也是json里面的数组数————直接用conArr.count代替
 @property (strong, nonatomic) NSString* isFollowed;
 
 @property int messageNum;//文章序号

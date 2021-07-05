@@ -48,8 +48,6 @@
 		9D3E38F52682E17B001BEE67 /* plstb.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D3E38F22682E17A001BEE67 /* plstb.storyboard */; };
 		9D3E38F82682E18D001BEE67 /* plViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D3E38F62682E18C001BEE67 /* plViewController.m */; };
 		9D3E38FE268360CA001BEE67 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D3E38FD268360CA001BEE67 /* Main.storyboard */; };
-		9D59504C268A34BB00C01759 /* comment.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D59504B268A34BB00C01759 /* comment.plist */; };
-		9D595053268A34C400C01759 /* Comment_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D595050268A34C400C01759 /* Comment_ViewController.m */; };
 		9D595059268A34F400C01759 /* Comment_TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D595055268A34F400C01759 /* Comment_TableViewCell.m */; };
 		9D59505A268A34F400C01759 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D595056268A34F400C01759 /* Main.storyboard */; };
 		9D59505C268A352B00C01759 /* tou.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D59505B268A352B00C01759 /* tou.png */; };
@@ -79,6 +77,9 @@
 		9D595104268DBEE700C01759 /* TagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D595103268DBEE700C01759 /* TagViewController.m */; };
 		9D59510A268DFF7800C01759 /* TagCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D595109268DFF7800C01759 /* TagCollectionViewCell.m */; };
 		9D59510D268E167200C01759 /* TagHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D59510C268E167200C01759 /* TagHeaderView.m */; };
+		9D59512626922D6700C01759 /* Comment_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D59512526922D6600C01759 /* Comment_ViewController.m */; };
+		9D59512826922EF900C01759 /* SQLiteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D59512726922EF900C01759 /* SQLiteManager.m */; };
+		9D59512C2692EE3900C01759 /* ZanLikeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D59512B2692EE3800C01759 /* ZanLikeView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -160,9 +161,6 @@
 		9D3E38F62682E18C001BEE67 /* plViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = plViewController.m; sourceTree = "<group>"; };
 		9D3E38F72682E18D001BEE67 /* plViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plViewController.h; sourceTree = "<group>"; };
 		9D3E38FD268360CA001BEE67 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
-		9D59504B268A34BB00C01759 /* comment.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = comment.plist; sourceTree = "<group>"; };
-		9D59504E268A34C400C01759 /* Comment_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment_ViewController.h; sourceTree = "<group>"; };
-		9D595050268A34C400C01759 /* Comment_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment_ViewController.m; sourceTree = "<group>"; };
 		9D595055268A34F400C01759 /* Comment_TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment_TableViewCell.m; sourceTree = "<group>"; };
 		9D595057268A34F400C01759 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9D595058268A34F400C01759 /* Comment_TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment_TableViewCell.h; sourceTree = "<group>"; };
@@ -202,6 +200,12 @@
 		9D595109268DFF7800C01759 /* TagCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TagCollectionViewCell.m; sourceTree = "<group>"; };
 		9D59510B268E166D00C01759 /* TagHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagHeaderView.h; sourceTree = "<group>"; };
 		9D59510C268E167200C01759 /* TagHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagHeaderView.m; sourceTree = "<group>"; };
+		9D59512426922D5B00C01759 /* Comment_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment_ViewController.h; sourceTree = "<group>"; };
+		9D59512526922D6600C01759 /* Comment_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment_ViewController.m; sourceTree = "<group>"; };
+		9D59512726922EF900C01759 /* SQLiteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQLiteManager.m; sourceTree = "<group>"; };
+		9D59512926922F0000C01759 /* SQLiteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLiteManager.h; sourceTree = "<group>"; };
+		9D59512A2692EE3600C01759 /* ZanLikeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZanLikeView.h; sourceTree = "<group>"; };
+		9D59512B2692EE3800C01759 /* ZanLikeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZanLikeView.m; sourceTree = "<group>"; };
 		FFB85D4A54C56DE2CA307B80 /* Pods-TouTiao_IMERVERSE.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TouTiao_IMERVERSE.release.xcconfig"; path = "Target Support Files/Pods-TouTiao_IMERVERSE/Pods-TouTiao_IMERVERSE.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -414,6 +418,8 @@
 		9D3E38C326803584001BEE67 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9D59512A2692EE3600C01759 /* ZanLikeView.h */,
+				9D59512B2692EE3800C01759 /* ZanLikeView.m */,
 				9D59510B268E166D00C01759 /* TagHeaderView.h */,
 				9D59510C268E167200C01759 /* TagHeaderView.m */,
 				9D3E38F02682E179001BEE67 /* plCell.h */,
@@ -451,8 +457,9 @@
 		9D59504A268A34BB00C01759 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				9D59512726922EF900C01759 /* SQLiteManager.m */,
+				9D59512926922F0000C01759 /* SQLiteManager.h */,
 				9D59505B268A352B00C01759 /* tou.png */,
-				9D59504B268A34BB00C01759 /* comment.plist */,
 			);
 			name = SupportingFiles;
 			path = "../../../../Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/c970a0e3a6cab0ddb884f76da69ab44f/Message/MessageTemp/9e98cf03cfabe3853b39776c3e0c68da/File/toutiao_Comment/toutiao_Comment/SupportingFiles";
@@ -461,8 +468,8 @@
 		9D59504D268A34C400C01759 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				9D59504E268A34C400C01759 /* Comment_ViewController.h */,
-				9D595050268A34C400C01759 /* Comment_ViewController.m */,
+				9D59512426922D5B00C01759 /* Comment_ViewController.h */,
+				9D59512526922D6600C01759 /* Comment_ViewController.m */,
 			);
 			name = Controllers;
 			path = "../../../../Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/c970a0e3a6cab0ddb884f76da69ab44f/Message/MessageTemp/9e98cf03cfabe3853b39776c3e0c68da/File/toutiao_Comment/toutiao_Comment/Controllers";
@@ -618,7 +625,6 @@
 			files = (
 				9D3E38CA26808B0A001BEE67 /* Menu.storyboard in Resources */,
 				9D3E3854267A23CE001BEE67 /* LaunchScreen.storyboard in Resources */,
-				9D59504C268A34BB00C01759 /* comment.plist in Resources */,
 				9D3E38F52682E17B001BEE67 /* plstb.storyboard in Resources */,
 				9D3E38FE268360CA001BEE67 /* Main.storyboard in Resources */,
 				9D3E3851267A23CE001BEE67 /* Assets.xcassets in Resources */,
@@ -697,6 +703,7 @@
 				9D10F3252685FB54006B0FE7 /* TVUMJRefreshAutoStateFooter.m in Sources */,
 				9D595092268B1E3200C01759 /* PageItem.swift in Sources */,
 				9D3E38F32682E17B001BEE67 /* plCell.m in Sources */,
+				9D59512826922EF900C01759 /* SQLiteManager.m in Sources */,
 				9D10F3282685FB54006B0FE7 /* TVUMJRefreshNormalHeader.m in Sources */,
 				9D3E384C267A23CB001BEE67 /* HomeViewController.m in Sources */,
 				9D5950B3268B7A9100C01759 /* LBXPermissions.swift in Sources */,
@@ -723,8 +730,8 @@
 				9D3E388A267EE9B1001BEE67 /* TabsbarViewController.m in Sources */,
 				9D10F3212685FB54006B0FE7 /* UIScrollView+TVUMJRefresh.m in Sources */,
 				9D595104268DBEE700C01759 /* TagViewController.m in Sources */,
+				9D59512C2692EE3900C01759 /* ZanLikeView.m in Sources */,
 				9D10F32E2685FB54006B0FE7 /* TVUMJRefreshHeader.m in Sources */,
-				9D595053268A34C400C01759 /* Comment_ViewController.m in Sources */,
 				9D5950B2268B7A9100C01759 /* LBXScanViewStyle.swift in Sources */,
 				9D10F32D2685FB54006B0FE7 /* TVUMJRefreshAutoFooter.m in Sources */,
 				9D5950B1268B7A9100C01759 /* ScanViewController.swift in Sources */,
@@ -732,6 +739,7 @@
 				9D5950BE268B8B1900C01759 /* biaoqianViewController.m in Sources */,
 				9D5950BD268B8B1900C01759 /* abcViewController.m in Sources */,
 				9D10F33F26877078006B0FE7 /* UserMessageModel.m in Sources */,
+				9D59512626922D6700C01759 /* Comment_ViewController.m in Sources */,
 				9D10F32F2685FB54006B0FE7 /* TVUMJRefreshComponent.m in Sources */,
 				9D10F32A2685FB54006B0FE7 /* TVUMJRefreshStateHeader.m in Sources */,
 				9D5950AF268B7A9100C01759 /* ScanResultController.swift in Sources */,

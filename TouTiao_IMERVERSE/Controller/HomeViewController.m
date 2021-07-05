@@ -17,8 +17,11 @@
 #import "LoginViewController.h"
 #import <SAMKeychain/SAMKeychain.h>
 #import "Comment_ViewController.h"
+#import "ZanLikeView.h"
 
-@interface HomeViewController () <LoginDelegate>
+#import <MJRefresh/MJRefresh.h>
+
+@interface HomeViewController () <LoginDelegate,LikeDelegate>
 
 @end
 
@@ -72,6 +75,7 @@
     self.shareNumLabel.hidden = YES;
     self.colletionButton.hidden = YES;
     self.agreeButton.hidden = YES;
+    self.likeView.hidden = YES;
     self.agreeNumlabel.hidden = YES;
     self.commentNumLabel.hidden = YES;
     self.collectionNumLabel.hidden = YES;
@@ -87,6 +91,7 @@
     self.shareNumLabel.hidden = NO;
     self.colletionButton.hidden = NO;
     self.agreeButton.hidden = NO;
+    self.likeView.hidden = NO;
     self.agreeNumlabel.hidden = NO;
     self.commentNumLabel.hidden = NO;
     self.collectionNumLabel.hidden = NO;
@@ -122,12 +127,19 @@
         }
         self.agreeButton.selected = NO;
     }
-    
-    
-//    //收藏页面（暂时先写在这里）
-//    CollectionViewController *vc = [[CollectionViewController alloc] init];
-//    [self.navigationController pushViewController:vc animated:YES];
-//    [self.navigationController popToViewController:vc animated:YES]; //popToViewController是弹出navigation栈并跳转那个弹出去的界面
+}
+
+//继承LikeDelegate后重写方法，被通知爱心有没有被按下，从而改变agreeNumeLabel————初始状态是不会调用这个方法的
+- (void) TouchUpLikeView: (NSString*)isPressed{
+    if([isPressed isEqual: @"YES"]){
+        if(![self.agreeNumlabel.text  isEqual: @"999+"]){
+            self.agreeNumlabel.text  = [NSString stringWithFormat: @"%d", (self.agreeNumlabel.text.intValue + 1)];
+        }
+    }else{
+        if(![self.agreeNumlabel.text  isEqual: @"999+"]){
+            self.agreeNumlabel.text  = [NSString stringWithFormat: @"%d", (self.agreeNumlabel.text.intValue - 1)];
+        }
+    }
 }
 
 - (void)commentButtonfunc:(id)sender {
@@ -136,8 +148,8 @@
 //    [self presentViewController:plvc animated:YES completion:nil];
     
     //上面是旧的评论页
-    NSLog(@"文章编号=%d",self.Contentarray[self.messageNum].messageid.intValue);
-    NSInteger * commentnum = [Comment_ViewController pop:self andid:self.Contentarray[self.messageNum].messageid.intValue];
+//    NSLog(@"文章编号=%d",self.Contentarray[self.messageNum].messageid.intValue);
+//    NSInteger  commentnum = [Comment_ViewController pop:self andid:self.Contentarray[self.messageNum].messageid.intValue andmodel:[[UserMessageModel alloc]init]];
 }
 
 
@@ -184,7 +196,7 @@
         self.nextMessageButton.selected = NO;
     }
     
-    if(self.messageNum >= 5){ //目前数据源就写了5篇
+    if(self.messageNum >= self.Contentarray.count){ //目前数据源就写了5篇
         //过大就直接不做了，避免数据过大
         self.messageNum = self.num404;
         //直接加载404
@@ -227,7 +239,7 @@
         NSLog(@"wkwebview == nil");
         self.wkwebview = [[WKWebView alloc]initWithFrame:self.view.bounds configuration:webViewConfig];
     }
-    if(url == nil){ //没有找到对应标签文章
+    if(url == nil){ //没有找到对应标签文章，不同的api的标签可能没有对应文章
         [self.wkwebview loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url404]]]; //有可能异步加载，注意
         [self.view addSubview: self.wkwebview];
     }
@@ -240,12 +252,22 @@
     
 #pragma mark 加载下拉刷新wkwebview组件
     TVUMJRefreshNormalHeader *header = [TVUMJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefresh)];
-           [header setTitle:@"下拉来刷新" forState:TVUMJRefreshStateIdle];
-           [header setTitle:@"松开来刷新" forState:TVUMJRefreshStatePulling];
-           [header setTitle:@"加载中..." forState:TVUMJRefreshStateRefreshing];
-           
-           header.lastUpdatedTimeLabel.hidden = YES;
-           self.wkwebview.scrollView.mj_header = header;
+    [header setTitle:@"下拉来刷新" forState:TVUMJRefreshStateIdle];
+    [header setTitle:@"松开来刷新" forState:TVUMJRefreshStatePulling];
+    [header setTitle:@"加载中..." forState:TVUMJRefreshStateRefreshing];
+    
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.wkwebview.scrollView.mj_header = header;
+    
+    
+#pragma mark 上拉加载下一篇wkwebview文章
+    MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefresh)];
+//    [TVUMJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefresh)];
+    [footer setTitle:@"上拉进入下一篇" forState:MJRefreshStateIdle];
+    [footer setTitle:@"松开加载下一篇" forState:MJRefreshStatePulling];
+    [footer setTitle:@"加载中 ..." forState:MJRefreshStateRefreshing];
+    self.wkwebview.scrollView.mj_footer = footer;
+    
     self.wkwebview.navigationDelegate = self;
     
     [self initProgressView];
@@ -277,7 +299,7 @@
     [self.view addSubview: self.wkwebview];
 //    [self.view addSubview:self.nextMessageButton];
     
-#pragma mark 加载下拉刷新wkwebview组件
+#pragma mark 404加载下拉刷新wkwebview组件
     TVUMJRefreshNormalHeader *header = [TVUMJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefresh)];
            [header setTitle:@"下拉来刷新" forState:TVUMJRefreshStateIdle];
            [header setTitle:@"松开来刷新" forState:TVUMJRefreshStatePulling];
@@ -285,12 +307,47 @@
            
            header.lastUpdatedTimeLabel.hidden = YES;
            self.wkwebview.scrollView.mj_header = header;
+    
+    
+#pragma mark 404上拉加载下一篇wkwebview文章
+    //TVUMJRefreshAutoNormalFooter无法生效，只会显示第一种状态，虽然功能正常，但是用户体验不好
+    MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefresh)];
+    [footer setTitle:@"已经是最后一篇啦~" forState:MJRefreshStateIdle];
+    [footer setTitle:@"别拽我啦~" forState:MJRefreshStatePulling];
+    [footer setTitle:@"加载中 ..." forState:MJRefreshStateRefreshing];
+    [footer endRefreshingWithNoMoreData];
+    self.wkwebview.scrollView.mj_footer = footer;
+    
+    
+
+    
     self.wkwebview.navigationDelegate = self;
     
     [self initProgressView];
-  
+
     // Listen the web load condition
     [self.wkwebview addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)footerRefresh{
+    // If user enter our app (not network), the URL is NULL even if we have already setted.
+    NSLog(@"上拉刷新啦");
+//    NSLog(@"self.num404== %d;self.messageNum== %d,self.messagelabel== %@,self.Contentarray[self.messageNum].label==%@ ",self.num404,self.messageNum,self.messagelabel,self.Contentarray[self.messageNum].label);
+    if(self.messageNum > self.Contentarray.count || self.messageNum >= self.num404){
+        TVUMJRefreshAutoNormalFooter *footer = [TVUMJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefresh)];
+        [footer setTitle:@"这是最后一篇新闻了，下拉刷新下吧~" forState:TVUMJRefreshStateIdle];
+        [footer setTitle:@"别拽我啦~" forState:TVUMJRefreshStatePulling];
+        [footer setTitle:@"尝试加载..." forState:TVUMJRefreshStateRefreshing];
+        self.wkwebview.scrollView.mj_footer = footer;
+        
+    }
+    else{
+        self.messageNum ++;
+        //上拉也会重新加载整个页面
+        [self setViewfunc : self.messageNum: self.messagelabel];
+    }
+    
+//    [self endRefresh]; //此方法在网页加载完毕和页面销毁等地方都会被调用，用于将刷新组件的Loading状态变成endRefresh状态
 }
 
 //由于按钮复用了两次，所以单独提出来
@@ -303,11 +360,18 @@
     [self.view addSubview: self.visual];
     
     //添加各个按钮
-    self.agreeButton = [[UIButton alloc]initWithFrame:CGRectMake(10, self.view.frame.size.height-80,self.view.frame.size.width/8,self.view.frame.size.width/8)];
-    [self.agreeButton addTarget:self action: @selector(agreeButtonfunc:) forControlEvents:UIControlEventTouchUpInside]; //UIControlEventTouchUpInside表示轻点按钮触发事件
-    [self.agreeButton  setImage:[UIImage systemImageNamed:@"hand.thumbsup"]  forState:UIControlStateNormal];
-    [self.agreeButton  setImage:[UIImage systemImageNamed:@"hand.thumbsup.fill"]   forState:UIControlStateSelected];
-    self.agreeButton.tintColor = UIColor.redColor;
+//    self.agreeButton = [[UIButton alloc]initWithFrame:CGRectMake(10, self.view.frame.size.height-80,self.view.frame.size.width/8,self.view.frame.size.width/8)];
+    self.likeView = [[ZanLikeView alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height-70,self.view.frame.size.width/14,self.view.frame.size.width/14)]; //设置背景图图方位 //设置爱心(爱心是asset文件夹下的两张前后图片)大小
+//    [self.agreeButton.imageView addSubview: likeView];
+    [self.view addSubview:self.likeView];
+    self.likeView.likeDuration = 0.5;
+    self.likeView.zanFillColor = [UIColor redColor];
+    self.likeView.delegate = self;
+//    self.likeView.backgroundColor = UIColor.lightGrayColor;
+//    [self.agreeButton addTarget:self action: @selector(agreeButtonfunc:) forControlEvents:UIControlEventTouchUpInside]; //UIControlEventTouchUpInside表示轻点按钮触发事件
+//    [self.agreeButton  setImage:[UIImage systemImageNamed:@"hand.thumbsup"]  forState:UIControlStateNormal];
+//    [self.agreeButton  setImage:[UIImage systemImageNamed:@"hand.thumbsup.fill"]   forState:UIControlStateSelected];
+//    self.agreeButton.tintColor = UIColor.redColor;
     
     self.agreeNumlabel= [[UILabel alloc]initWithFrame:CGRectMake(self.view.frame.size.width/8 * 1,self.view.frame.size.height-80,self.view.frame.size.width/8,self.view.frame.size.width/8)];
     [self.shareNumLabel setFont: [UIFont systemFontOfSize:15]];
@@ -381,7 +445,8 @@
     [self.view addSubview:self.commentButton];
     [self.view addSubview:self.shareNumLabel];
     [self.view addSubview:self.colletionButton];
-    [self.view addSubview:self.agreeButton];
+//    [self.view addSubview:self.agreeButton];
+//    [self.view addSubview:self.likeView];
     [self.view addSubview:self.agreeNumlabel];
     [self.view addSubview:self.commentNumLabel];
     [self.view addSubview:self.collectionNumLabel];
@@ -554,6 +619,7 @@
     if(url == nil){ //没有找到对应标签文章
         [self.wkwebview loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url404]]]; //有可能异步加载，注意
         [self.view addSubview: self.wkwebview];
+        
     }
     else{
         [self.wkwebview loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url]]]; //有可能异步加载，注意
@@ -664,6 +730,7 @@
         NSLog(@"Home首页的获得刷新数据通知的代理方法没有被登录页面调用！");
     }
 }
+
 
 
 @end

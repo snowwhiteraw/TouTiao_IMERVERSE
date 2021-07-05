@@ -1,7 +1,7 @@
 //
 //  TagCollectionViewCell.m
 //  TouTiao_IMERVERSE
-//
+///Users/a123/Documents/TouTiao_IMERVERSE/TouTiao_IMERVERSE/View/TagHeaderView.m
 //  Created by 123 on 2021/7/1.
 //
 
@@ -39,6 +39,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.titleLabel.frame = self.contentView.bounds;//文本充满整个视图（毕竟这就一个cell）
+    
 }
 
 //懒加载，调用此类实例.inEditState将会调用此方法，不能修改参数和返回类型
