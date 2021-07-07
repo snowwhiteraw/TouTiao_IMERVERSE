@@ -4,6 +4,9 @@
 //
 //  Created by 123 on 2021/6/16.
 //
+#import "CommentModel.h"
+#import "Comment_ViewController.h"
+
 
 #import "HomeViewController.h"
 #import <WebKit/WebKit.h>
@@ -150,6 +153,10 @@
     //上面是旧的评论页
 //    NSLog(@"文章编号=%d",self.Contentarray[self.messageNum].messageid.intValue);
 //    NSInteger  commentnum = [Comment_ViewController pop:self andid:self.Contentarray[self.messageNum].messageid.intValue andmodel:[[UserMessageModel alloc]init]];
+    CommentModel *model = [[CommentModel alloc]init];
+    model.name = @"aaa";
+    [Comment_ViewController pop:self andid:1 andmodel:model];
+    
 }
 
 

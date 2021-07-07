@@ -20,7 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 //获得主页面的输入框的地址
 @property(nonatomic,strong)UITextView *textview;
 @property(nonatomic,strong)NSString *pername;
-- (void)getMSG:(UITextView *)tv andName:(NSString *)name;
+@property(nonatomic,strong)UIViewController *vc;
+- (void)sentMSG:(UITextView *)tv andName:(NSString *)name;
 
 //点赞按钮按下次数
 @property(nonatomic)BOOL clicking;

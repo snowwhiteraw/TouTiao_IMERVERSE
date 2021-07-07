@@ -52,7 +52,7 @@
         //这里如果self.comnarr为nil要怎么提示用户没有数据？（未联网）
         
 #pragma mark 加载首页固定顶部标签页
-        self.selectedItemsIndex = 2;
+        self.selectedItemsIndex = 0;
         
         self.dataArr = [self.Contentarray[0].labels mutableCopy];
         self.unSelectedDataArr = [self.Contentarray[0].unSelectedLabels mutableCopy];

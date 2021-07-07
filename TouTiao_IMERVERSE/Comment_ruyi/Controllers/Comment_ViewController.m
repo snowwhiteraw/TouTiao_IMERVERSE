@@ -9,45 +9,67 @@
 #import <Masonry.h>
 #import "Comment_TableViewCell.h"
 #import "CommentModel.h"
+#import "SQLiteManager.h"
 
 @interface Comment_ViewController ()<UITextViewDelegate>
 
 @property UITableView *tableview;
 @property NSInteger hight;
 //这个数组用来存储评论的plist数据
+@property (strong)SQLiteManager *manager;
 @property (nonatomic,strong)NSMutableArray *commentArray;
+@property (nonatomic,strong)NSString *path;
 
 @property(nonatomic,strong)UIView *bottomView;
 @property(nonatomic,strong)UITextView *replyTextView;
 @property(nonatomic,strong)UIButton *replyBotton;
 
-@property(nonatomic)NSInteger *id;
+@property(nonatomic)int articleid;
+@property(nonatomic,strong)CommentModel *user;
+
+
 @end
 @implementation Comment_ViewController
 
+#pragma mark 这里通过通知实现了cell中菜单按钮的功能，获得某cell的用户名或评论
+- (void)shard:(NSNotification *)noti{//分享按钮的通知响应
+    UIAlertController *alerk = [UIAlertController alertControllerWithTitle:@"" message:@"已复制该评论，快去粘贴分享吧！" preferredStyle:UIAlertControllerStyleAlert];
+        [alerk addAction:[UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alerk animated:YES completion:nil];
+    NSLog(@"\n%@:\n%@",[noti.userInfo objectForKey:@"sharededname"],[noti.userInfo objectForKey:@"sharededdate"]);
+    UIPasteboard *pab = [UIPasteboard generalPasteboard];
+    [pab setString:[NSString stringWithFormat:@"用户”%@“的评论:\n%@",[noti.userInfo objectForKey:@"sharededname"],[noti.userInfo objectForKey:@"sharededdate"]]];
+}
 
+- (void)jubao:(NSNotification *)noti{//举报按钮的通知响应
+    UIAlertController *alerk = [UIAlertController alertControllerWithTitle:@"" message:@"举报成功，审核中..." preferredStyle:UIAlertControllerStyleAlert];
+        [alerk addAction:[UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alerk animated:YES completion:nil];
+    NSLog(@"%@ 被举报啦！！",[noti.userInfo objectForKey:@"jubaoname"]);
+}
 
 
 #pragma mark 懒加载模型数据到NSArray类型的commentArray数据里
 - (NSArray *)commentArray{
+    self.manager = [[SQLiteManager alloc]init];
     if(!_commentArray){
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"comment.plist" ofType:nil];
-        NSArray *arrayDict = [NSArray arrayWithContentsOfFile:path];
-        NSMutableArray *arrayModels = [NSMutableArray array];
-        for(NSDictionary *dict in arrayDict){
-            CommentModel *model = [CommentModel commentModelWithDict:dict];
-            [arrayModels addObject:model];
-        }
-        _commentArray = arrayModels;
+    [self.manager openDBWithPath:@"/Users/a123/toutiaoComment.db"];
+    _commentArray = [self.manager select:self.articleid];
     }
     return _commentArray;
+    
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-      
+#pragma mark 一些通知接收
+    //举报按钮
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(jubao:) name:@"Notify_jubao" object:nil];
+    //分享按钮
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(shard:) name:@"Notify_shard" object:nil];
+
+    
 #pragma mark 评论页的纯代码搭建
     
     //-----------------顶部------------------
@@ -85,9 +107,7 @@
     self.replyBotton.titleLabel.font = [UIFont systemFontOfSize:13];
     [self.replyBotton.titleLabel setTextAlignment:NSTextAlignmentRight];
     [self.replyBotton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    
-    
-    [self.replyBotton addTarget:self action:@selector(replybtaction:) forControlEvents:UIControlEventAllEvents];
+    [self.replyBotton addTarget:self action:@selector(replybtaction:) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomView addSubview:self.replyBotton];
     [self.replyBotton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.bottomView.mas_right).with.offset(-5);
@@ -115,9 +135,6 @@
         make.right.equalTo(self.replyBotton.mas_left);
     }];
     
- 
-    
-    
     
     //-----------------中间tabelview部分----------------------
     self.tableview = [[UITableView alloc]init];
@@ -136,8 +153,12 @@
     [self.tableview registerClass:[Comment_TableViewCell class] forCellReuseIdentifier:@"123"];
     [self.view addSubview:self.tableview];
     
+    
+
 }
 
+
+#pragma mark tableview的代理方法
 //     tableviw的数据源方法
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -149,41 +170,48 @@
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
 #pragma mark 这里给cell页面传了本vc的底部输入框textview的地址与用户名，慎用
-    [cell getMSG:self.replyTextView andName:model.name];
-    
-    //通过模型赋值到cell的控件里
-    cell.touXiang.image = [UIImage imageNamed:@"tou.png"];
+    [cell sentMSG:self.replyTextView andName:model.name];
+#pragma mark    通过模型赋值到cell的控件里
+    cell.touXiang.image = [UIImage imageNamed:model.touXiang];
     cell.name.text = model.name;
     cell.comment.text = model.comment;
     cell.time.text = model.time;
     cell.dz_count.text = model.dz_count;
-    self.hight = ((cell.comment.text.length)/27+2)*14+65;
-    
+
+//    cell.name.text = @"啊啊啊啊";
+//    cell.touXiang.image = [UIImage imageNamed:@"tou1.jpeg"];
+//    cell.comment.text = @"dsfaioohoiudsafhgoivhasdripgfhap9srdjfgpg9pasj    法法师打发顺丰";
+//    cell.dz_count.text = @"9";
+//    cell.time.text = @"2021";
+    self.hight = [self computeHightWithString:cell.comment.text];
     return cell;
 }
 //tableview行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.commentArray.count;
+//    return 10;
 }
 //tableview行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return self.hight;
+//    return 100;
 }
 
+#pragma mark 页面的api
+//弹出评论页的类方法实现
++ (void)pop :(UIViewController *)vc andid:(int)articleid andmodel:(CommentModel *)user{
+    Comment_ViewController *pl1 = [[Comment_ViewController alloc]init];
+    pl1.articleid = articleid;
+    pl1.user = user;
+    [vc presentViewController:pl1 animated:YES completion:nil];
+    
+}
 
+#pragma mark 其他相关方法的实现
 //顶部的点击关闭评论页面方法
 - (void)back{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
-+ (NSInteger *)pop :(UIViewController *)vc andid:(NSInteger *)id{
-    Comment_ViewController *pl1 = [[Comment_ViewController alloc]init];
-    pl1.id = id;
-    [vc presentViewController:pl1 animated:YES completion:nil];
-    return pl1.commentArray.count;
-}
-
-
 
 
 //实现键盘监听方法使输入框不被遮挡
@@ -205,17 +233,44 @@
     }];
 }
 
-//发布按钮的响应shijian
+//发布按钮的响应事件
 - (void)replybtaction:(UIButton *)bt{
-    [self.replyTextView setText:@""];
-    [self.replyTextView resignFirstResponder];
     
+    
+    //使发布按钮不可用
+    [self.replyBotton setEnabled:NO];
+    //把评论写入数据库
+    CommentModel *model = [[CommentModel alloc]init];
+    model.name = self.user.name;
+    model.touXiang = self.user.touXiang;
+    model.comment = self.replyTextView.text;
+    //回复时间
+    NSDate *date = [NSDate date];
+    NSDateFormatter *df = [[NSDateFormatter alloc]init];
+    [df setDateFormat:@"yyyy-MM-dd HH:MM"];
+    NSString *nss = [df stringFromDate:date];
+    model.time = nss;
+    model.dz_count = @"0";
+    [self.manager insert:model :self.articleid];
+    //清空输入框
+    [self.replyTextView setText:@""];
+    //关闭键盘
+    [self.replyTextView resignFirstResponder];
+    //弹出对话框
     UIAlertController *alerk = [UIAlertController alertControllerWithTitle:@"" message:@"发布成功" preferredStyle:UIAlertControllerStyleAlert];
-    [alerk addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
+    [alerk addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //这里重新加载了一遍数据库的数据到commentarray
+        [self.manager openDBWithPath:@"/Users/a123/toutiaoComment.db"];
+        self->_commentArray = [self.manager select:self.articleid];
+        //
+        [self.tableview reloadData];
+        
+        NSLog(@"%lu",(unsigned long)self.commentArray.count);
+            }]] ;
     [self presentViewController:alerk animated:YES completion:nil];
 }
 
-//规定发布按钮的可用性
+//输入框的代理方法规定发布按钮的可用性
 - (void)textViewDidChange:(UITextView *)textView{
     if(![textView hasText]){
         self.replyBotton.titleLabel.textColor = [UIColor grayColor];
@@ -228,7 +283,17 @@
     }
 }
 
-
+- (float)computeHightWithString:(NSString *)text{
+    if(text){
+    CGSize com = CGSizeMake(self.replyTextView.contentSize.width, CGFLOAT_MAX);
+    CGRect size = [text boundingRectWithSize:com options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil];
+    float hight = size.size.height+18+55;
+    return  hight;
+    }else{
+        NSLog(@"找不到评论啊");
+        return 100;
+    }
+}
 
 
 /*

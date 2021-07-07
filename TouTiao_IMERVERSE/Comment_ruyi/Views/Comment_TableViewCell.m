@@ -8,13 +8,15 @@
 //  cell的高度应当是45+20+textview的高度
 #import "Comment_TableViewCell.h"
 #import <Masonry.h>
+#import "KxMenu.h"
 
 @implementation Comment_TableViewCell
 
 #pragma mark 使调用者传进一个textview，并存储其地址
-- (void)getMSG:(UITextView *)tv andName:(NSString *)name{
+- (void)sentMSG:(UITextView *)tv andName:(NSString *)name{
     self.textview = tv;
     self.pername = name;
+    
 }
 
 - (void)awakeFromNib {
@@ -70,6 +72,7 @@
     [self.contentView addSubview:self.reply];
     //菜单按钮
     self.menu = [[UIButton alloc]init];
+    [self.menu addTarget:self action:@selector(menuaction:) forControlEvents:UIControlEventAllEvents];
     [self.menu setTitle:@"..." forState:UIControlStateNormal];
     self.menu.titleLabel.font = [UIFont boldSystemFontOfSize:24];
     [self.menu setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -104,7 +107,7 @@
     [self.time mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.touXiang.mas_right);
             make.bottom.equalTo(self.contentView.mas_bottom);
-            make.size.mas_equalTo(CGSizeMake(80, 20));
+            make.size.mas_equalTo(CGSizeMake(160, 20));
     }];
     //点赞按钮
     [self.dianzan mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -137,37 +140,60 @@
 - (void) replyaction:(UIButton *)bt{
     self.textview.text = [NSString stringWithFormat:@"回复 %@ ：\n",self.pername];
     [self.textview becomeFirstResponder];
+    
 }
 
 //点赞按钮响应
 - (void)dianzanaction:(UIButton *)bt{
     
     if(!self.clicking){
+        
         self.dianzan.tintColor = [UIColor systemBlueColor];
         NSInteger tem = [self.dz_count.text intValue];
         tem++;
         self.dz_count.text = [NSString stringWithFormat:@"%d",tem];
     }else{
+        
         self.dianzan.tintColor = [UIColor lightGrayColor];
         NSInteger tem = [self.dz_count.text intValue];
         tem--;
         self.dz_count.text = [NSString stringWithFormat:@"%d",tem];
     }
-    
-    
-    
-    
-    
     self.clicking = !self.clicking;
 }
 
-//- (void)menuaction(UIButton *)bt{
-//    
-//    
-//}
 
 
+//菜单按钮的监听
+- (void)menuaction:(UIButton *)bt{
+    
+    //这里用到了KxMenu框架
+    NSArray *menuItems =
+    @[[KxMenuItem menuItem:@"分享"
+                     image:nil
+                    target:self
+                    action:@selector(shard)],
+      [KxMenuItem menuItem:@"举报该评论"
+                       image:nil
+                      target:self
+                      action:@selector(jubao)]
+    ];
+    
+    KxMenuItem *first = menuItems[0];
+    first.foreColor = [UIColor whiteColor];
+    first.alignment = NSTextAlignmentCenter;
+    [KxMenu showMenuInView:self.contentView
+                  fromRect:bt.frame
+                 menuItems:menuItems];
+}
 
 
+- (void)jubao{
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"Notify_jubao" object:nil userInfo:@{@"jubaoname":self.name.text}];
+}
+
+- (void)shard{
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"Notify_shard" object:nil userInfo:@{@"sharededname":self.name.text,@"sharededdate":self.comment.text}];
+}
 
 @end

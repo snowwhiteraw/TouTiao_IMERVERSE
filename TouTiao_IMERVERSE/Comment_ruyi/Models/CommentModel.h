@@ -17,10 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,copy)NSString *dz_count;
 @property(nonatomic,copy)NSString *comment;
 
-- (instancetype)initWithDict:(NSDictionary *)dict;
-
-+ (instancetype)commentModelWithDict:(NSDictionary *)dict;
-
 @end
 
 NS_ASSUME_NONNULL_END
