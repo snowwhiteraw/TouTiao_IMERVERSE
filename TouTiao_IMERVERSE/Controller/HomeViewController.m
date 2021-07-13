@@ -21,11 +21,13 @@
 #import <SAMKeychain/SAMKeychain.h>
 #import "Comment_ViewController.h"
 #import "ZanLikeView.h"
+#import "IFMShareView.h"
 
 #import <MJRefresh/MJRefresh.h>
 
 @interface HomeViewController () <LoginDelegate,LikeDelegate>
-
+@property(nonatomic, strong) NSMutableArray *shareArray;
+@property(nonatomic, strong) NSMutableArray *functionArray;
 @end
 
 @implementation HomeViewController
@@ -40,11 +42,18 @@
     //全在这里加载的话，会造成父view响应时间变长
     
     //可拖拽按钮
-    self.nextMessageButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/8 * 4,self.view.frame.size.height- self.view.frame.size.width/8 * 5, self.view.frame.size.width/8 * 3, self.view.frame.size.width/8)];
+    self.nextMessageButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width/8 * 4,self.view.frame.size.height- self.view.frame.size.width/8 * 5, self.view.frame.size.width/8 * 2, self.view.frame.size.width/8 * 2)];
 //    [self.nextMessageButton setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     [self.nextMessageButton  setImage:[UIImage systemImageNamed:@"arrowtriangle.down.circle.fill"]  forState:UIControlStateNormal];
     [self.nextMessageButton  setImage:[UIImage systemImageNamed:@"arrowtriangle.down.circle.fill.fill"]   forState:UIControlStateSelected];
-    self.nextMessageButton.tintColor = UIColor.redColor;
+    self.nextMessageButton.tintColor = UIColor.grayColor;
+    self.nextMessageButton.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.nextMessageButton.layer.shadowOffset = CGSizeZero;
+    self.nextMessageButton.layer.shadowRadius = 5;
+    self.nextMessageButton.layer.shadowOpacity = 0.5;
+//    [self.nextMessageButton.layer setBorderWidth:5];
+//    [self.nextMessageButton.imageView.layer setBorderWidth:3];
+    
 //    [self.nextMessageButton setTitle:@"下一篇" forState:UIControlStateNormal];
     [self.nextMessageButton addTarget:self action: @selector(nextMessgaeButtonfunc:) forControlEvents:UIControlEventTouchUpInside]; //UIControlEventTouchUpInside表示轻点按钮触发事件
     //添加手势,使得按钮可拖拽
@@ -189,9 +198,83 @@
 
 - (void)shareButtonfunc:(id)sender {
     NSLog(@"点击了转发");
+    //调用伊布的第三方分享组件
+    [self showHeadFootStyle:sender];
+}
+//以下是伊布第三方组件用到的函数
+- (void)showHeadFootStyle:(UIButton *)sender {
+    IFMShareView *shareView = [[IFMShareView alloc] initWithShareItems:self.shareArray functionItems:self.functionArray itemSize:CGSizeMake(80,100)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 30)];
+    headerView.backgroundColor = [UIColor clearColor];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, headerView.frame.size.width, 15)];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor colorWithRed:51/255.0 green:68/255.0 blue:79/255.0 alpha:1.0];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont systemFontOfSize:15];
+    label.text = @"头条沉浸版";
+    [headerView addSubview:label];
     
+    
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 50)];
+    footerView.backgroundColor = [UIColor clearColor];
+    label = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, headerView.frame.size.width, 15)];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor colorWithRed:5/255.0 green:27/255.0 blue:40/255.0 alpha:1.0];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont systemFontOfSize:18];
+    label.text = @"-.-";
+    [footerView addSubview:label];
+    
+    shareView.headerView = headerView;
+    shareView.footerView = footerView;
+    shareView = [self addShareContent:shareView];
+    [shareView showFromControlle:self];
 }
 
+- (NSMutableArray *)shareArray{
+    if (!_shareArray) {
+        _shareArray = [NSMutableArray array];
+        
+        [_shareArray addObject:IFMPlatformNameSms];
+        [_shareArray addObject:IFMPlatformNameEmail];
+        [_shareArray addObject:IFMPlatformNameSina];
+        [_shareArray addObject:IFMPlatformNameWechat];
+        [_shareArray addObject:IFMPlatformNameQQ];
+        [_shareArray addObject:IFMPlatformNameAlipay];
+    }
+    return _shareArray;
+}
+- (NSMutableArray *)functionArray{
+    if (!_functionArray) {
+        _functionArray = [NSMutableArray array];
+        [_functionArray addObject:[[IFMShareItem alloc] initWithImage:[UIImage imageNamed:@"function_collection"] title:@"收藏" action:^(IFMShareItem *item) {
+            ALERT_MSG(@"提示",@"点击了收藏",self);
+        }]];
+        [_functionArray addObject:[[IFMShareItem alloc] initWithImage:[UIImage imageNamed:@"function_copy"] title:@"复制" action:^(IFMShareItem *item) {
+            ALERT_MSG(@"提示",@"点击了复制",self);
+        }]];
+        [_functionArray addObject:[[IFMShareItem alloc] initWithImage:[UIImage imageNamed:@"function_expose"] title:@"举报" action:^(IFMShareItem *item) {
+            ALERT_MSG(@"提示",@"点击了举报",self);
+        }]];
+        [_functionArray addObject:[[IFMShareItem alloc] initWithImage:[UIImage imageNamed:@"function_font"] title:@"调整字体" action:^(IFMShareItem *item) {
+            ALERT_MSG(@"提示",@"点击了调整字体",self);
+        }]];
+        [_functionArray addObject:[[IFMShareItem alloc] initWithImage:[UIImage imageNamed:@"function_link"] title:@"复制链接" action:^(IFMShareItem *item) {
+            ALERT_MSG(@"提示",@"点击了复制链接",self);
+        }]];
+        [_functionArray addObject:[[IFMShareItem alloc] initWithImage:[UIImage imageNamed:@"function_refresh"] title:@"刷新" action:^(IFMShareItem *item) {
+            ALERT_MSG(@"提示",@"点击了刷新",self);
+        }]];
+    }
+    return _functionArray;
+}
+- (IFMShareView *)addShareContent:(IFMShareView *)shareView{
+    [shareView addText:@"分享测试"];
+    [shareView addURL:[NSURL URLWithString:@"http://www.baidu.com"]];
+    [shareView addImage:[UIImage imageNamed:@"share_alipay"]];
+    
+    return shareView;
+}
 
 
 

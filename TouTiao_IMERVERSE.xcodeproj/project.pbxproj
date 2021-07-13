@@ -67,8 +67,6 @@
 		9D5950B3268B7A9100C01759 /* LBXPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5950A8268B7A9000C01759 /* LBXPermissions.swift */; };
 		9D5950B4268B7A9100C01759 /* CodeScan.bundle.zip in Resources */ = {isa = PBXBuildFile; fileRef = 9D5950A9268B7A9000C01759 /* CodeScan.bundle.zip */; };
 		9D5950B5268B7A9100C01759 /* LBXScanWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5950AA268B7A9000C01759 /* LBXScanWrapper.swift */; };
-		9D5950BD268B8B1900C01759 /* abcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5950BA268B8B1900C01759 /* abcViewController.m */; };
-		9D5950BE268B8B1900C01759 /* biaoqianViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5950BC268B8B1900C01759 /* biaoqianViewController.m */; };
 		9D595101268CAD1300C01759 /* MasonryDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D595100268CAD1300C01759 /* MasonryDemoViewController.m */; };
 		9D595104268DBEE700C01759 /* TagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D595103268DBEE700C01759 /* TagViewController.m */; };
 		9D59510A268DFF7800C01759 /* TagCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D595109268DFF7800C01759 /* TagCollectionViewCell.m */; };
@@ -92,6 +90,10 @@
 		9D595267269462C400C01759 /* SQLiteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D595266269462C400C01759 /* SQLiteManager.m */; };
 		9D59526D269462D600C01759 /* Comment_TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D595269269462D600C01759 /* Comment_TableViewCell.m */; };
 		9D5952722694631800C01759 /* KxMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5952712694631800C01759 /* KxMenu.m */; };
+		9DA20F52269D71B400EB3713 /* IFMShareItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DA20F4B269D71B400EB3713 /* IFMShareItem.m */; };
+		9DA20F53269D71B400EB3713 /* IFMShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DA20F4C269D71B400EB3713 /* IFMShareView.m */; };
+		9DA20F54269D71B400EB3713 /* IFMShareImage.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9DA20F4D269D71B400EB3713 /* IFMShareImage.bundle */; };
+		9DA20F55269D71B400EB3713 /* IFMShareItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DA20F51269D71B400EB3713 /* IFMShareItemCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -194,10 +196,6 @@
 		9D5950A9268B7A9000C01759 /* CodeScan.bundle.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = CodeScan.bundle.zip; sourceTree = "<group>"; };
 		9D5950AA268B7A9000C01759 /* LBXScanWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LBXScanWrapper.swift; sourceTree = "<group>"; };
 		9D5950B6268B7AE200C01759 /* TouTiaoSK17.V2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TouTiaoSK17.V2-Bridging-Header.h"; sourceTree = "<group>"; };
-		9D5950B9268B8B1900C01759 /* biaoqianViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = biaoqianViewController.h; sourceTree = "<group>"; };
-		9D5950BA268B8B1900C01759 /* abcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = abcViewController.m; sourceTree = "<group>"; };
-		9D5950BB268B8B1900C01759 /* abcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = abcViewController.h; sourceTree = "<group>"; };
-		9D5950BC268B8B1900C01759 /* biaoqianViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = biaoqianViewController.m; sourceTree = "<group>"; };
 		9D5950FF268CAD1300C01759 /* MasonryDemoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasonryDemoViewController.h; sourceTree = "<group>"; };
 		9D595100268CAD1300C01759 /* MasonryDemoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasonryDemoViewController.m; sourceTree = "<group>"; };
 		9D595102268DBEE700C01759 /* TagViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TagViewController.h; sourceTree = "<group>"; };
@@ -231,6 +229,13 @@
 		9D59526C269462D600C01759 /* Comment_TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment_TableViewCell.h; sourceTree = "<group>"; };
 		9D5952702694631700C01759 /* KxMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxMenu.h; sourceTree = "<group>"; };
 		9D5952712694631800C01759 /* KxMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxMenu.m; sourceTree = "<group>"; };
+		9DA20F4B269D71B400EB3713 /* IFMShareItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMShareItem.m; sourceTree = "<group>"; };
+		9DA20F4C269D71B400EB3713 /* IFMShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMShareView.m; sourceTree = "<group>"; };
+		9DA20F4D269D71B400EB3713 /* IFMShareImage.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IFMShareImage.bundle; sourceTree = "<group>"; };
+		9DA20F4E269D71B400EB3713 /* IFMShareItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMShareItemCell.h; sourceTree = "<group>"; };
+		9DA20F4F269D71B400EB3713 /* IFMShareItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMShareItem.h; sourceTree = "<group>"; };
+		9DA20F50269D71B400EB3713 /* IFMShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFMShareView.h; sourceTree = "<group>"; };
+		9DA20F51269D71B400EB3713 /* IFMShareItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IFMShareItemCell.m; sourceTree = "<group>"; };
 		FFB85D4A54C56DE2CA307B80 /* Pods-TouTiao_IMERVERSE.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TouTiao_IMERVERSE.release.xcconfig"; path = "Target Support Files/Pods-TouTiao_IMERVERSE/Pods-TouTiao_IMERVERSE.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -522,20 +527,9 @@
 		9D5950B7268B8AE500C01759 /* Labels_yibolaxi */ = {
 			isa = PBXGroup;
 			children = (
-				9D5950B8268B8B1900C01759 /* youneed */,
+				9DA20F4A269D71B400EB3713 /* IFMShare */,
 			);
 			path = Labels_yibolaxi;
-			sourceTree = "<group>";
-		};
-		9D5950B8268B8B1900C01759 /* youneed */ = {
-			isa = PBXGroup;
-			children = (
-				9D5950B9268B8B1900C01759 /* biaoqianViewController.h */,
-				9D5950BA268B8B1900C01759 /* abcViewController.m */,
-				9D5950BB268B8B1900C01759 /* abcViewController.h */,
-				9D5950BC268B8B1900C01759 /* biaoqianViewController.m */,
-			);
-			path = youneed;
 			sourceTree = "<group>";
 		};
 		9D59523E2694614800C01759 /* Comment_ruyi */ = {
@@ -613,6 +607,20 @@
 				9D5952712694631800C01759 /* KxMenu.m */,
 			);
 			path = Menu;
+			sourceTree = "<group>";
+		};
+		9DA20F4A269D71B400EB3713 /* IFMShare */ = {
+			isa = PBXGroup;
+			children = (
+				9DA20F4B269D71B400EB3713 /* IFMShareItem.m */,
+				9DA20F4C269D71B400EB3713 /* IFMShareView.m */,
+				9DA20F4D269D71B400EB3713 /* IFMShareImage.bundle */,
+				9DA20F4E269D71B400EB3713 /* IFMShareItemCell.h */,
+				9DA20F4F269D71B400EB3713 /* IFMShareItem.h */,
+				9DA20F50269D71B400EB3713 /* IFMShareView.h */,
+				9DA20F51269D71B400EB3713 /* IFMShareItemCell.m */,
+			);
+			path = IFMShare;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -693,6 +701,7 @@
 				9D595260269462AF00C01759 /* tou5.jpeg in Resources */,
 				9D3E38F42682E17B001BEE67 /* plCell.xib in Resources */,
 				9D59525F269462AF00C01759 /* tou9.jpeg in Resources */,
+				9DA20F54269D71B400EB3713 /* IFMShareImage.bundle in Resources */,
 				9D59525B269462AF00C01759 /* tou6.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -757,6 +766,7 @@
 				9D10F3202685FB54006B0FE7 /* NSBundle+TVUMJRefresh.m in Sources */,
 				9D10F3272685FB54006B0FE7 /* TVUMJRefreshAutoGifFooter.m in Sources */,
 				9D3E38EC2681D7E8001BEE67 /* SlideMenuView.m in Sources */,
+				9DA20F55269D71B400EB3713 /* IFMShareItemCell.m in Sources */,
 				9D59509E268B6E8900C01759 /* PersonHomeViewController.swift in Sources */,
 				9D10F3222685FB54006B0FE7 /* TVUMJRefreshBackStateFooter.m in Sources */,
 				9D3E38BF267F916D001BEE67 /* NotificationViewController.m in Sources */,
@@ -787,6 +797,7 @@
 				9D5950AD268B7A9100C01759 /* LBXScanViewController.swift in Sources */,
 				9D59508E268B1E3200C01759 /* PageBar.swift in Sources */,
 				9D5950AB268B7A9100C01759 /* LBXScanNetAnimation.swift in Sources */,
+				9DA20F52269D71B400EB3713 /* IFMShareItem.m in Sources */,
 				9D59509C268B6E7900C01759 /* MenuViewController.swift in Sources */,
 				9D3E388A267EE9B1001BEE67 /* TabsbarViewController.m in Sources */,
 				9D10F3212685FB54006B0FE7 /* UIScrollView+TVUMJRefresh.m in Sources */,
@@ -797,8 +808,6 @@
 				9D10F32D2685FB54006B0FE7 /* TVUMJRefreshAutoFooter.m in Sources */,
 				9D5950B1268B7A9100C01759 /* ScanViewController.swift in Sources */,
 				9D5950AE268B7A9100C01759 /* LBXScanLineAnimation.swift in Sources */,
-				9D5950BE268B8B1900C01759 /* biaoqianViewController.m in Sources */,
-				9D5950BD268B8B1900C01759 /* abcViewController.m in Sources */,
 				9D10F33F26877078006B0FE7 /* UserMessageModel.m in Sources */,
 				9D5952462694622000C01759 /* Comment_ViewController.m in Sources */,
 				9D10F32F2685FB54006B0FE7 /* TVUMJRefreshComponent.m in Sources */,
@@ -807,6 +816,7 @@
 				9D59508F268B1E3200C01759 /* PageManager.swift in Sources */,
 				9D10F3292685FB54006B0FE7 /* TVUMJRefreshGifHeader.m in Sources */,
 				9D10F3302685FB54006B0FE7 /* TVUMJRefreshBackFooter.m in Sources */,
+				9DA20F53269D71B400EB3713 /* IFMShareView.m in Sources */,
 				9D3E3849267A23CB001BEE67 /* SceneDelegate.m in Sources */,
 				9D59526D269462D600C01759 /* Comment_TableViewCell.m in Sources */,
 			);

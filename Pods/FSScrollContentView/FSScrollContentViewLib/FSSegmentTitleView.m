@@ -250,15 +250,9 @@
 
 - (void)setTitleSelectColor:(UIColor *)titleSelectColor
 {
-    NSArray * colorArr = @[[UIColor redColor],[UIColor blueColor],[UIColor orangeColor],[UIColor brownColor]];
-    int num = 0;
     _titleSelectColor = titleSelectColor;
     for (UIButton *btn in self.itemBtnArr) {
-        [btn setTitleColor:colorArr[num % 4] forState:UIControlStateSelected];
-        num ++;
-        if(num > 100){
-            num = 0;
-        }
+        [btn setTitleColor:titleSelectColor forState:UIControlStateSelected];
     }
 }
 
